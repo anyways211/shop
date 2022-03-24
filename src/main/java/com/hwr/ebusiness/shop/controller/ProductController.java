@@ -32,7 +32,9 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @GetMapping("/product/delete/{id}")
+
+    //§ACHTUNG, hier fehlt der path!
+    @RequestMapping(method = RequestMethod.DELETE)
     @ResponseBody
     public ResponseEntity<Product> DeleteOneProduct(@PathVariable("id") Long id) {
         Optional<Product> product = productRepository.findById(id);
