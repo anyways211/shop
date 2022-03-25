@@ -28,8 +28,8 @@ public class Customer {
     @Column(name = "house")
     private int house;
 
- /*   @OneToMany(mappedBy = "customer", orphanRemoval = true)
-    private List<Purchase> purchases;*/
+    @OneToMany(mappedBy = "customer", orphanRemoval = true)
+    private List<Purchase> purchases;
 
     public Customer() {
     }

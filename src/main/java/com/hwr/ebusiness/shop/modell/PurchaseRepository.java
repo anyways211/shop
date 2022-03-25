@@ -11,5 +11,4 @@ public interface PurchaseRepository extends CrudRepository<Purchase, Long> {
 
     List<Purchase> findAll();
 
-
 }
