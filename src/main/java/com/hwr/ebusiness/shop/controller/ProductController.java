@@ -8,7 +8,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.rmi.ServerException;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +17,7 @@ public class ProductController {
 
     @Autowired
     ProductRepository productRepository;
+
     //alle Produkte anzeigen
     @RequestMapping(method = RequestMethod.GET, path = "/products")
     public ResponseEntity<List<Product>> ShowAllCustomers(){
@@ -31,13 +31,13 @@ public class ProductController {
     @ResponseBody
     public ResponseEntity<Product> ShowOneCustomers(@PathVariable Long id) {
         //produkt nach id suchen
-        Optional<Product> customer = productRepository.findById(id);
-        if (customer.isPresent()){
+        Optional<Product> product = productRepository.findById(id);
+        if (product.isPresent()){
             //gefundenes Produkt ausgeben
-            return new ResponseEntity<>(customer.get(), HttpStatus.OK);
+            return new ResponseEntity<>(product.get(), HttpStatus.OK);
         }
         else {
-            //nicht gefunden-> fehler ausgeben
+            //nicht gefunden -> fehler ausgeben
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -63,16 +63,33 @@ public class ProductController {
         }
     }
 
+    //neues Produkt anlegen
     @PostMapping(path="/product",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<Product> newProduct(@RequestBody Product product){
-        Product newProduct = productRepository.save(product);
-        if (newProduct == null) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<Product> postProduct(@RequestBody Product product){
+        //nach Produkt suchen
+        Optional<Product> newProduct = productRepository.findById(product.getId());
+        if (newProduct.isPresent()) {
+            //bei Post soll nichts geändert werden, also fehler, wenn es das Produkt schon gibt
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
-            return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
+            //neues Produkt anlegen
+            productRepository.save(product);
+            return new ResponseEntity<>(product, HttpStatus.CREATED);
         }
+    }
+
+    //neues Produkt anlegen oder überschreiben
+    @PutMapping(path="/product",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<Product> putProduct(@RequestBody Product product){
+        //neues Produkt anlegen oder altes überschreiben/ändern
+        Product newProduct = productRepository.save(product);
+        return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
+
     }
 }
