@@ -20,7 +20,7 @@ public class ProductController {
 
     //alle Produkte anzeigen
     @RequestMapping(method = RequestMethod.GET, path = "/products")
-    public ResponseEntity<List<Product>> ShowAllCustomers(){
+    public ResponseEntity<List<Product>> ShowAllProducts(){
         //Produkte aus DB auflisten
         List<Product> products = productRepository.findAll();
         //Liste ausgeben
@@ -29,7 +29,7 @@ public class ProductController {
     //ein Produkt nach ID anzeigen
     @GetMapping("/product/{id}")
     @ResponseBody
-    public ResponseEntity<Product> ShowOneCustomers(@PathVariable Long id) {
+    public ResponseEntity<Product> ShowOneProduct(@PathVariable Long id) {
         //produkt nach id suchen
         Optional<Product> product = productRepository.findById(id);
         if (product.isPresent()){
@@ -41,7 +41,7 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
+    //Delete one Product nach ID
     @DeleteMapping("/product/{id}")
     @ResponseBody
     public ResponseEntity<Product> DeleteOneProduct(@PathVariable("id") Long id) {

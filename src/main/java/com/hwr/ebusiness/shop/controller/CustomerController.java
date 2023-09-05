@@ -53,7 +53,7 @@ public class CustomerController {
                 return new ResponseEntity<>(HttpStatus.OK);
             } catch (Exception e) {
                 //fehler beim löschen
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }else{
             //kein customer mit gesuchter ID gefunden

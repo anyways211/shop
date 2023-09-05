@@ -18,16 +18,16 @@ public class PurchaseController {
     PurchaseRepository purchaseRepository;
     //alle Einkäufe anzeigen
     @RequestMapping(method = RequestMethod.GET, path = "/purchases")
-    public ResponseEntity<List<Purchase>> ShowAllCustomers(){
+    public ResponseEntity<List<Purchase>> ShowAllPurchases(){
         //alle einkäufe auflisten
         List<Purchase> purchases = purchaseRepository.findAll();
         //Liste ausgeben
         return new ResponseEntity<>(purchases, HttpStatus.OK);
     }
-    //einen einkauf nachc id anzeigen
+    //einen einkauf nach id anzeigen
     @GetMapping("/purchase/{id}")
     @ResponseBody
-    public ResponseEntity<Purchase> ShowOneCustomers(@PathVariable Long id) {
+    public ResponseEntity<Purchase> ShowOnePurchase(@PathVariable Long id) {
         //suchen
         Optional<Purchase> purchase = purchaseRepository.findById(id);
         if (purchase.isPresent()){

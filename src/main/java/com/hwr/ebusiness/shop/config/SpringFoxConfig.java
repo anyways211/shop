@@ -8,13 +8,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.data.rest.configuration.SpringDataRestConfiguration;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+//erstellen der OpenAPI-Description mit Swagger
 @Configuration
 @EnableSwagger2
-//@Import(SpringDataRestConfiguration.class)
 public class SpringFoxConfig extends WebMvcConfigurerAdapter {
     @Bean
     public Docket api() {
